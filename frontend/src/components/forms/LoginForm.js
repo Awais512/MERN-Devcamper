@@ -1,11 +1,31 @@
 import React from 'react';
+import { login } from '../../Functions/auth';
+import { toast } from 'react-toastify';
 
-const LoginForm = () => {
+const LoginForm = ({ values, setValues }) => {
+  const { email, password } = values;
+
+  const handleChange = (name) => (e) => {
+    setValues({ ...values, [name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await login({ email, password });
+      setValues({ ...values, email: '', password: '' });
+      toast.success('Logged in Successfully');
+    } catch (error) {
+      toast.error(error.response.data.error);
+    }
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className='form-group'>
-        <label for='email'>Email Address</label>
+        <label htmlFor='email'>Email Address</label>
         <input
+          onChange={handleChange('email')}
           type='email'
           name='email'
           className='form-control'
@@ -14,8 +34,9 @@ const LoginForm = () => {
         />
       </div>
       <div className='form-group mb-4'>
-        <label for='password'>Password</label>
+        <label htmlFor='password'>Password</label>
         <input
+          onChange={handleChange('password')}
           type='password'
           name='password'
           className='form-control'

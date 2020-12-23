@@ -7,7 +7,6 @@ const RegisterForm = ({ values, setValues }) => {
 
   const handleChange = (name) => (e) => {
     setValues({ ...values, [name]: e.target.value });
-    console.log(values);
   };
 
   const handleSubmit = async (e) => {
