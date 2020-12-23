@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import RegisterForm from '../components/forms/RegisterForm';
 
 const Register = () => {
+  const [values, setValues] = useState({
+    name: '',
+    email: '',
+    password: '',
+    password2: '',
+    role: '',
+  });
   return (
     <section className='form mt-5'>
       <div className='container'>
@@ -16,7 +23,7 @@ const Register = () => {
                   Register to list your bootcamp or rate, review and favorite
                   bootcamps
                 </p>
-                <RegisterForm />
+                <RegisterForm values={values} setValues={setValues} />
               </div>
             </div>
           </div>
