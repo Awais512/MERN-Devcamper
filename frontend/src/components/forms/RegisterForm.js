@@ -7,6 +7,7 @@ const RegisterForm = ({ values, setValues }) => {
 
   const handleChange = (name) => (e) => {
     setValues({ ...values, [name]: e.target.value });
+    console.log(values);
   };
 
   const handleSubmit = async (e) => {
@@ -16,11 +17,16 @@ const RegisterForm = ({ values, setValues }) => {
       return toast.error('Confirm Password does not match with Password field');
     }
     try {
-      const { data } = await register({ name, email, password, role });
-      console.log(data);
+      await register({ name, email, password, role });
+      setValues({
+        ...values,
+        name: '',
+        email: '',
+        password: '',
+        password2: '',
+      });
       toast.success('User Registered Successfully');
     } catch (error) {
-      console.log(error.response.data.error);
       toast.error(error.response.data.error);
     }
   };
@@ -93,10 +99,11 @@ const RegisterForm = ({ values, setValues }) => {
         </div>
         <div className='form-check'>
           <input
+            onChange={handleChange('role')}
             className='form-check-input'
             type='radio'
             name='role'
-            value='publisher'
+            value={role}
           />
           <label className='form-check-label'>Bootcamp Publisher</label>
         </div>
