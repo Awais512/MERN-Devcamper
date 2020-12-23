@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import RegisterForm from '../components/forms/RegisterForm';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const [values, setValues] = useState({
@@ -12,6 +14,7 @@ const Register = () => {
   return (
     <section className='form mt-5'>
       <div className='container'>
+        <ToastContainer />
         <div className='row'>
           <div className='col-md-6 m-auto'>
             <div className='card bg-white p-4 mb-4'>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { register } from '../../Functions/auth';
+import { toast } from 'react-toastify';
 
 const RegisterForm = ({ values, setValues }) => {
   const { name, email, password, password2, role } = values;
@@ -10,8 +11,18 @@ const RegisterForm = ({ values, setValues }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { data } = await register({ name, email, password, role });
-    console.log(data);
+
+    if (password2 !== password) {
+      return toast.error('Confirm Password does not match with Password field');
+    }
+    try {
+      const { data } = await register({ name, email, password, role });
+      console.log(data);
+      toast.success('User Registered Successfully');
+    } catch (error) {
+      console.log(error.response.data.error);
+      toast.error(error.response.data.error);
+    }
   };
 
   return (
